@@ -29,11 +29,17 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
+    # register the database commands
     from . import db
+
     db.init_app(app)
 
+    # apply the blueprints to the app
     from . import auth
+    from . import blog
+
     app.register_blueprint(auth.bp)
+    app.register_blueprint(blog.bp)
 
     # make url_for('index') == url_for('blog.index')
     # in another app, you might define a separate main index here with
